@@ -12,4 +12,24 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.sass('resources/sass/app.scss', 'public/css')
+
+mix.extract([
+    "vue",
+    "vuex",
+    "vue-router",
+    "axios",
+    "js-cookie",
+    'sweetalert2',
+    'vue-avatar'
+])
+
+mix.webpackConfig({
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            '~': __dirname + '/resources/js',
+        },
+    },
+
+})

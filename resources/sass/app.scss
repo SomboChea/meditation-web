@@ -1,8 +1,40 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+/*
+Template Name: Admin Template
+Author: Niravjoshi / Wrappixel
+File: scss
+*/
 
-// Variables
-@import 'variables';
+//(Required file)
+$custom-select-indicator: url(/assets/images/custom-select.png)!default;
+@import "gotham_fonts";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+$skin5:#F5F5F5 !default;
+$themecolor: #2CC3E9 !default;
+//$skin1:#2CC3E9 !default;
+
+
+
+@import 'variable';
+
+// Import Bootstrap source files (Required file)
+@import "bootstrap/bootstrap";
+
+//This is for the components (Required file)
+@import 'components';
+
+//This is for the widgets (Required file)
+@import 'widgets/widgets';
+
+//This is for the responsive (Required file)
+@import 'responsive';
+
+//In This scss you can write your scss
+@import 'custom'; 
+
+//This is for the icons (Required file)
+@import 'icons/font-awesome/css/fontawesome-all.css';
+@import 'icons/themify-icons/themify-icons.css';
+//@import "mdi";
+//@import "icons/material-design-iconic-font/css/materialdesignicons.min.css";
+@import "icons/weather-icons/css/weather-icons.min.css";
+

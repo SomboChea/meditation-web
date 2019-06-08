@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Route;
+
+/**
+ *  For Any Request Redirect to home
+ */
+Route::get("/{any}", function (\Illuminate\Http\Request $request){
+    return view("app");
+})->name('home')->where('any', '.*');
