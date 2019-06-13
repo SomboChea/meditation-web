@@ -13,18 +13,35 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        return [
-          "user"=>[
-              "avatar"=>env("APP_LOGO_LIGHT"),
-              "name"=>"Testing",
-              "email"=>"Testing"
-          ]
-        ];
+        return response()->json([
+            "user"=>[
+                "avatar"=>env("APP_LOGO_LIGHT"),
+                "name"=>"Testing",
+                "email"=>"Testing"
+            ]
+        ])->withCookie(cookie()->make(
+            'token',
+            "je",
+            0,
+            null,
+            null,
+            false,
+            false));
     }
 
+    public function FetchUser(){
+        return response()->json([
+            "user"=>[
+                "avatar"=>env("APP_LOGO_LIGHT"),
+                "name"=>"Testing",
+                "email"=>"Testing"
+            ]
+        ]);
+    }
     public function logout(Request $request)
     {
 
     }
+
 
 }

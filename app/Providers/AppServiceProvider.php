@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Base\FirebaseStorageInterface;
+use App\Base\FirestoreInterface;
+use App\Base\Implement\FirebaseStorageRepository;
+use App\Base\Implement\FirestoreRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +18,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->app->bind(FirestoreInterface::class,FirestoreRepository::class);
+        $this->app->bind(FirebaseStorageInterface::class,FirebaseStorageRepository::class);
+
     }
 
     /**

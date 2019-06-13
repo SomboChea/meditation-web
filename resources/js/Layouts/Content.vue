@@ -51,7 +51,7 @@
                 <div class="row">
                     <div class="col-12">
                         <!--                            <h1>Hello World</h1>-->
-                        <div class="card" style="min-width: 700px">
+                        <div class="card">
                             <div class="card-body">
                                 <router-view />
                             </div>

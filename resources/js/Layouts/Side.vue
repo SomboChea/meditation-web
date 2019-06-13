@@ -25,7 +25,7 @@
 <!--                                    <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>-->
 <!--                                    <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>-->
 <!--                                    <div class="dropdown-divider"></div>-->
-                                    <router-link :to="{name:'settings'}" class="dropdown-item" href="javascript:void(0)">
+                                    <router-link :to="{name:'setting.index'}" class="dropdown-item" href="javascript:void(0)">
                                         <i class="ti-settings m-r-5 m-l-5"></i> Account Setting
                                     </router-link>
                                     <div class="dropdown-divider"></div>
@@ -94,6 +94,12 @@
                     to:{name:"dashboard"},
                     icon_class:"mdi-view-dashboard-outline"
                 },
+                {
+                    text:"Storages",
+                    to:{name:"storages"},
+                    icon_class:"mdi-view-dashboard-outline"
+                },
+
 
 
             ]
