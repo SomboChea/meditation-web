@@ -6,6 +6,9 @@
                 <img :src="media.cover" alt="" class="img-fluid">
                 <div>{{media.author}}</div>
                 <div>{{media.genre}}</div>
+                <div>
+                    <a :href="media.attachment" target="_blank" class="btn btn-primary">Download Attachment</a>
+                </div>
             </div>
         </div>
     </div>
@@ -21,6 +24,7 @@
         props: ['item'],
         created(){
             this.media=this.item
+            console.log("media",this.media)
         }
     }
 </script>

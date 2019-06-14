@@ -11,6 +11,7 @@ namespace App\Base\Implement;
 
 use App\Base\FirebaseStorageInterface;
 use App\Base\FirestoreInterface;
+use Google\Cloud\Firestore\DocumentSnapshot;
 use Google\Cloud\Firestore\FirestoreClient;
 use Google\Cloud\Storage\Acl;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,20 @@ class FirestoreRepository implements FirestoreInterface
             ->withServiceAccount($serviceAccount)
             ->createFirestore();
         $this->storage=$store;
+    }
+
+
+    /**
+     * @param $collection
+     * @return mixed
+     */
+    public function getdocuments($collection){
+        $rows=$this->firestore->collection($collection)->documents()->rows();
+//        dd($result);
+        $result= collect($rows)->map(function ($el){
+            return $el->data();
+        });
+        return $result;
     }
 
     /**

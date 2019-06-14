@@ -1039,7 +1039,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     this.$axios.get("".concat(_CONST__WEBPACK_IMPORTED_MODULE_1__["ROOT_API"], "/medias")).then(function (res) {
       console.log(res);
-      _this.medias = res.datamyfilelink;
+      _this.medias = res.data;
     });
   },
   methods: {
@@ -1136,6 +1136,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Cover",
   comp_name: "file-cover",
@@ -1147,6 +1150,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['item'],
   created: function created() {
     this.media = this.item;
+    console.log("media", this.media);
   }
 });
 
@@ -4476,7 +4480,18 @@ var render = function() {
         _vm._v(" "),
         _c("div", [_vm._v(_vm._s(_vm.media.author))]),
         _vm._v(" "),
-        _c("div", [_vm._v(_vm._s(_vm.media.genre))])
+        _c("div", [_vm._v(_vm._s(_vm.media.genre))]),
+        _vm._v(" "),
+        _c("div", [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { href: _vm.media.attachment, target: "_blank" }
+            },
+            [_vm._v("Download Attachment")]
+          )
+        ])
       ])
     ])
   ])
@@ -4721,14 +4736,9 @@ var render = function() {
         })
       : _c("img", {
           staticClass: "rounded-circle img-fluid",
-          attrs: { width: "150", src: "/assets/images/no-image.png", alt: "" },
+          attrs: { width: "150", src: _vm.$_env["DEFAULT_NOIMAGE"], alt: "" },
           on: { click: _vm.ChooseImage }
         }),
-    _vm._v(" "),
-    _c("input", {
-      attrs: { type: "hidden", name: "img", name: _vm.name },
-      domProps: { value: _vm.temp_img || "/assets/images/no-image.png" }
-    }),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),

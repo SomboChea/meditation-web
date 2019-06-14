@@ -78,7 +78,7 @@
             this.$axios.get(`${ROOT_API}/medias`)
                 .then(res => {
                     console.log(res);
-                    this.medias = res.datamyfilelink
+                    this.medias = res.data
                 })
         },
         methods: {

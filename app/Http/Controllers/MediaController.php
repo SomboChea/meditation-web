@@ -14,7 +14,12 @@ class MediaController extends Controller
         $this->firestore=$fs;
     }
 
+
+
     public function gets(){
+        $collection=$this->firestore->getdocuments((new Media())->getTable());
+//        dd($collection);
+        return $collection;
         return [
             [
                 "name"=>"u1",
