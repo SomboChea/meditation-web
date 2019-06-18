@@ -8,4 +8,5 @@ class Media extends Model
 {
     //
     protected $fillable=["attachment","author","genre","cover","name"];
+
 }
