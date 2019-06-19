@@ -101,4 +101,14 @@ class FirestoreRepository implements FirestoreInterface
             ->data();
         return $snapshot;
     }
+
+    public function find($table,$id){
+        try{
+            $doc= $this->firestore->collection($table)->document($id);
+            $snap=$doc->snapshot();
+            return collect($snap->data());
+        }catch (\Exception $e){
+            return collect([]);
+        }
+    }
 }

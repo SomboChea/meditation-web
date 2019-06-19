@@ -809,10 +809,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       form: {
-        email: "",
-        password: "" // email:"admin@gmail.com",
-        // password:"123456"
-
+        // email:"",
+        // password:"",
+        email: "testing@mail.com",
+        password: "123456"
       }
     };
   },
@@ -3937,7 +3937,7 @@ var render = function() {
                       "div",
                       { staticClass: "user-pic" },
                       [
-                        _vm.user.avatar
+                        _vm.user.photoUrl
                           ? _c("Avatar", {
                               staticClass: "rounded-circle",
                               attrs: {
@@ -3946,7 +3946,9 @@ var render = function() {
                                 width: "40"
                               }
                             })
-                          : _c("Avatar", { attrs: { username: _vm.user.name } })
+                          : _c("Avatar", {
+                              attrs: { username: _vm.user.displayName || "" }
+                            })
                       ],
                       1
                     ),
@@ -3973,7 +3975,7 @@ var render = function() {
                               { staticClass: "m-b-0 user-name gt-medium" },
                               [
                                 _vm._v(
-                                  _vm._s(_vm.user.name) +
+                                  _vm._s(_vm.user.displayName) +
                                     "\n                                        "
                                 ),
                                 _c("i", { staticClass: "fa fa-angle-down" })
@@ -6049,7 +6051,8 @@ var actions = (_actions = {}, _defineProperty(_actions, _Store_Type__WEBPACK_IMP
               password: password
             }).then(function (res) {
               state.islogin = true;
-              state.user = res.data.user;
+              state.user = res.data.data;
+              console.log(res);
             });
 
           case 5:
@@ -6073,7 +6076,8 @@ var actions = (_actions = {}, _defineProperty(_actions, _Store_Type__WEBPACK_IMP
 
   return this.$axios.post("".concat(_CONST__WEBPACK_IMPORTED_MODULE_2__["ROOT_API"], "/user")).then(function (res) {
     state.islogin = true;
-    state.user = res.data.user;
+    state.user = res.data.data;
+    console.log(res);
   });
 }), _defineProperty(_actions, _Store_Type__WEBPACK_IMPORTED_MODULE_1__["auth"].logout, function (_ref5) {
   var state = _ref5.state;

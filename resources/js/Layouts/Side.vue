@@ -10,13 +10,13 @@
                         <!-- User Profile-->
                         <div class="user-profile d-flex no-block dropdown m-t-20">
                             <div class="user-pic">
-                                <Avatar v-if="user.avatar" :src="user.avatar" alt="users" class="rounded-circle" width="40" />
+                                <Avatar v-if="user.photoUrl" :src="user.avatar" alt="users" class="rounded-circle" width="40" />
 <!--                                <Avatar src="/assets/images/users/1.jpg" alt="users" class="rounded-circle" width="40" />-->
-                                <Avatar v-else :username="user.name"/>
+                                <Avatar v-else :username="user.displayName || ''"/>
                             </div>
                             <div class="user-content hide-menu m-l-10">
                                 <a href="javascript:void(0)" class="" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <h5 class="m-b-0 user-name gt-medium">{{user.name}}
+                                    <h5 class="m-b-0 user-name gt-medium">{{user.displayName}}
                                         <i class="fa fa-angle-down" ></i></h5>
                                     <span class="op-5 user-email gt">{{user.email}}</span>
                                 </a>

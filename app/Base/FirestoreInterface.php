@@ -29,5 +29,6 @@ interface FirestoreInterface
      */
     public function getdocuments($collection);
 
+    public function find($table, $id);
 
-    }
+}

@@ -24,7 +24,8 @@ export const actions={
         await this.$axios.post(`${ROOT_API}/login`,{email,password})
             .then(res=>{
                 state.islogin=true
-                state.user=res.data.user
+                state.user=res.data.data
+                console.log(res)
             })
     },
 
@@ -36,7 +37,8 @@ export const actions={
         return this.$axios.post(`${ROOT_API}/user`)
             .then(res=>{
                 state.islogin=true
-                state.user=res.data.user
+                state.user=res.data.data
+                console.log(res)
             })
     },
     [auth.logout]({state}) {

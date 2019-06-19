@@ -57,10 +57,10 @@
         name: "LoginV2",
         data:()=>({
             form:{
-                email:"",
-                password:"",
-                // email:"admin@gmail.com",
-                // password:"123456"
+                // email:"",
+                // password:"",
+                email:"testing@mail.com",
+                password:"123456"
             }
         }),
         methods:{
