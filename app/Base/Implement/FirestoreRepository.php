@@ -49,7 +49,13 @@ class FirestoreRepository implements FirestoreInterface
      * @return mixed
      */
     public function getdocuments($collection){
-        $rows=$this->firestore->collection($collection)->documents()->rows();
+        $documents=$this->firestore->collection($collection)->documents();
+
+        if(is_array($documents)){
+            return [];
+        }
+
+        $rows=$documents->rows();
 //        dd($result);
         $result= collect($rows)->map(function ($el){
             return $el->data();
@@ -61,7 +67,7 @@ class FirestoreRepository implements FirestoreInterface
      * @var UploadedFile
      */
     private $test;
-    public function store(Model $model){
+    public function store(Model $model,$uid){
         $table_name=$model->getTable();
         $fillables=$model->getFillable();
         foreach ($fillables as $fillable){
@@ -71,31 +77,8 @@ class FirestoreRepository implements FirestoreInterface
             }
         }
 
-        $attachment=$model->attachment;
-        $cover=$model->cover;
-        $attach_info=$this->storage->store_file($attachment,"attach");
-        $cover_info=$this->storage->store_file($cover,"cover");
-
-        $model->fill([
-            "attachment"=>$attach_info['mediaLink'],
-            "cover"=>$cover_info['mediaLink']
-        ]);
-//        $this->test->getClientOriginalName()
-//        dd($file);
-//        dd()
-//        $uploaded=$this->storage->getBucket()
-//            ->acl()
-//            ->add('allUsers',Acl::ROLE_READER);
-//        $this->storage->getStorageClient()->bucket()->
-//        $uploaded=$this->storage->getBucket()->upload($file,[
-//                "name"=>$file->getClientOriginalName(),
-//            'acl' => [],
-//            'predefinedAcl' => 'PUBLICREAD'
-//            ])->info();
-//        dd($uploaded);
-
         $snapshot= $this->firestore->collection($table_name)
-            ->document($model->name)
+            ->document($uid)
             ->set($model->toArray())
             ->snapshot()
             ->data();

@@ -51,7 +51,7 @@
 
 <script>
     import {mapActions,mapGetters} from "vuex"
-    import {auth} from "../Store/Type";
+    import {auth,other} from "../Store/Type";
 
     export default {
         name: "LoginV2",

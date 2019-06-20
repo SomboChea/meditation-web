@@ -89,9 +89,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     return created;
   }(),
-  mounted: function mounted() {
-    // console.log("mounted")
-    $(".preloader").fadeOut();
+  mounted: function mounted() {// console.log("mounted")
+    // $(".preloader").fadeOut();
   }
 });
 
@@ -215,7 +214,8 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   mounted: function mounted() {
-    // this is for close icon when navigation open in mobile view
+    this.$store.dispatch(_Store_Type__WEBPACK_IMPORTED_MODULE_3__["other"].close_loading, true); // this is for close icon when navigation open in mobile view
+
     $(".nav-toggler").on('click', function () {
       $("#main-wrapper").toggleClass("show-sidebar");
       $(".nav-toggler i").toggleClass("ti-menu");
@@ -1038,7 +1038,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     this.$axios.get("".concat(_CONST__WEBPACK_IMPORTED_MODULE_1__["ROOT_API"], "/medias")).then(function (res) {
-      console.log(res);
+      // console.log(res);
       _this.medias = res.data;
     });
   },
@@ -1322,7 +1322,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Image",
+  name: "ImageUpload",
   comp_name: "image-upload",
   props: ['src', "name"],
   data: function data() {
@@ -3941,13 +3941,15 @@ var render = function() {
                           ? _c("Avatar", {
                               staticClass: "rounded-circle",
                               attrs: {
-                                src: _vm.user.avatar,
+                                src: _vm.user.photoUrl,
                                 alt: "users",
                                 width: "40"
                               }
                             })
                           : _c("Avatar", {
-                              attrs: { username: _vm.user.displayName || "" }
+                              attrs: {
+                                username: _vm.user.displayName || "U S E R"
+                              }
                             })
                       ],
                       1
@@ -6009,6 +6011,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 /* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ~/Store */ "./resources/js/Store/index.js");
 
 
 var _getters, _actions;
@@ -6018,6 +6021,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -6044,7 +6048,7 @@ var actions = (_actions = {}, _defineProperty(_actions, _Store_Type__WEBPACK_IMP
           case 0:
             state = _ref.state;
             email = _ref2.email, password = _ref2.password;
-            console.log("login");
+            _Store__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch(_Store_Type__WEBPACK_IMPORTED_MODULE_1__["other"].start_loading);
             _context.next = 5;
             return this.$axios.post("".concat(_CONST__WEBPACK_IMPORTED_MODULE_2__["ROOT_API"], "/login"), {
               email: email,
@@ -6052,7 +6056,8 @@ var actions = (_actions = {}, _defineProperty(_actions, _Store_Type__WEBPACK_IMP
             }).then(function (res) {
               state.islogin = true;
               state.user = res.data.data;
-              console.log(res);
+              js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.set('token', res.data.token);
+              _Store__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch(_Store_Type__WEBPACK_IMPORTED_MODULE_1__["other"].close_loading);
             });
 
           case 5:
@@ -6068,16 +6073,18 @@ var actions = (_actions = {}, _defineProperty(_actions, _Store_Type__WEBPACK_IMP
   };
 }()), _defineProperty(_actions, _Store_Type__WEBPACK_IMPORTED_MODULE_1__["auth"].fetch, function (_ref4) {
   var state = _ref4.state;
+  _Store__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch(_Store_Type__WEBPACK_IMPORTED_MODULE_1__["other"].start_loading);
   var token = js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.get("token");
 
   if (!token) {
+    _Store__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch(_Store_Type__WEBPACK_IMPORTED_MODULE_1__["other"].close_loading);
     return;
   }
 
   return this.$axios.post("".concat(_CONST__WEBPACK_IMPORTED_MODULE_2__["ROOT_API"], "/user")).then(function (res) {
     state.islogin = true;
     state.user = res.data.data;
-    console.log(res);
+    _Store__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch(_Store_Type__WEBPACK_IMPORTED_MODULE_1__["other"].close_loading);
   });
 }), _defineProperty(_actions, _Store_Type__WEBPACK_IMPORTED_MODULE_1__["auth"].logout, function (_ref5) {
   var state = _ref5.state;

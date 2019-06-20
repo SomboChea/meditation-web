@@ -36,7 +36,7 @@
         },
         mounted() {
             // console.log("mounted")
-            $(".preloader").fadeOut();
+            // $(".preloader").fadeOut();
         }
     }
 </script>

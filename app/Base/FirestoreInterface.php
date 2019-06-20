@@ -19,7 +19,7 @@ interface FirestoreInterface
      * @param Model $model
      * @return mixed
      */
-    public function store(Model $model);
+    public function store(Model $model,$uid);
 
     /**
      * get collection's document

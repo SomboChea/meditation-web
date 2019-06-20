@@ -2,62 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Base\FirebaseStorageInterface;
 use App\Base\FirestoreInterface;
 use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class MediaController extends Controller
 {
     private $firestore;
-    public function __construct(FirestoreInterface $fs)
+    private $storage;
+
+    public function __construct(FirestoreInterface $fs,FirebaseStorageInterface $str)
     {
-        $this->firestore=$fs;
+        $this->storage=$str;
+        $this->firestore = $fs;
     }
 
 
-
-    public function gets(){
-        $collection=$this->firestore->getdocuments((new Media())->getTable());
-//        dd($collection);
+    public function gets()
+    {
+        $collection = $this->firestore->getdocuments((new Media())->getTable());
         return $collection;
-        return [
-            [
-                "name"=>"u1",
-                "cover"=>"/assets/images/users/1.jpg",
-                "content"=>"hello",
-                "author"=>"ls",
-                "genre"=>"genre1",
-            ],
-            [
-                "name"=>"u1",
-                "cover"=>"/assets/images/users/5.jpg",
-                "content"=>"hello",
-                "author"=>"sl1",
-                "genre"=>"genre1",
-            ],
-            [
-                "name"=>"u9",
-                "cover"=>"/assets/images/users/2.jpg",
-                "content"=>"hello",
-                "author"=>"ls",
-                "genre"=>"genre2",
-            ],
-            [
-                "name"=>"u1",
-                "cover"=>"/assets/images/users/3.jpg",
-                "content"=>"hello",
-                "author"=>"dd",
-                "genre"=>"genre2",
-            ],
-
-        ];
     }
 
-    public function upload(Request $request){
-        $media=new Media();
-        $media->fill($request->toArray());
-        $media->cover=$request->cover ?? env("DEFAULT_NOIMAGE");
-        $result=$this->firestore->store($media);
+    public function upload(Request $request)
+    {
+        $media = new Media();
+
+        $media->cover = $request->cover ?? env("DEFAULT_NOIMAGE");
+
+        $attachment = $request->attachment;
+        $cover = $request->cover;
+        $attach_info = $this->storage->store_file($attachment, "attach");
+        $cover_info = $this->storage->store_file($cover, "cover");
+
+        $media->fill(array_merge(\request()->toArray(),[
+                "attachment" => $attach_info['mediaLink'],
+                "cover" => $cover_info['mediaLink']
+            ]));
+
+        $result = $this->firestore->store($media,$media->name);
         return $result;
     }
 }

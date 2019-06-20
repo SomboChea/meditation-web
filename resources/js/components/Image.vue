@@ -27,7 +27,7 @@
     import {ROOT_API} from "~/CONST";
 
     export default {
-        name: "Image",
+        name: "ImageUpload",
         comp_name:"image-upload",
         props:['src',"name"],
         data:()=>({

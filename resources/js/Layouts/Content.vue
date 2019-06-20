@@ -99,6 +99,8 @@
         components: {Side, Nav, Footer},
         data: () => ({}),
         mounted() {
+            this.$store.dispatch(other.close_loading,true)
+
             // this is for close icon when navigation open in mobile view
             $(".nav-toggler").on('click', function () {
                 $("#main-wrapper").toggleClass("show-sidebar");

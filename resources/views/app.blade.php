@@ -1,7 +1,7 @@
 @php
     $config=[
     "APP_NAME"=>env("APP_NAME"),
-    "APP_LOGO_LIGHT"=>env("APP_LOGO"),
+    "APP_LOGO_LIGHT"=>env("APP_LOGO_LIGHT"),
     "APP_LOGO_BLACK"=>env("APP_LOGO_BLACK"),
     "APP_URL"=>env("APP_URL"),
     "DEFAULT_NOIMAGE"=>env("DEFAULT_NOIMAGE")
