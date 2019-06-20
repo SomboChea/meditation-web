@@ -35,7 +35,7 @@ trait FirebaseAuthenticate
             $verify=$auth->verifyIdToken($idtoken);
             return $verify;
         }catch (\Exception $exception){
-            return abort(500,$exception->getMessage());
+            return abort(401,$exception->getMessage());
         }
     }
 

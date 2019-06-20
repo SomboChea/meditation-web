@@ -19,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::get("/{any}", function (\Illuminate\Http\Request $request){
     return view("app");
 })->name('home')->where('any', '.*');
+
+
+//Route::get('/**',function (){
+//    return view("app");
+//});

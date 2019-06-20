@@ -12,6 +12,9 @@
 {{--    Data Table--}}
 {{--    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>--}}
 
+
+<!-- Play Audio -->
+<script src="https://cdn.plyr.io/3.5.3/plyr.js"></script>
 <!-- Bootstrap tether Core JavaScript -->
 <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -26,3 +29,4 @@
 <script src="/js/app.js"></script>
 <!--Custom JavaScript -->
 {{--<script src="../../dist/js/custom.js"></script>--}}
+

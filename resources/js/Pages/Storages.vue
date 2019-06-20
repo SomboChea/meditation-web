@@ -7,9 +7,13 @@
 
         <div v-if="medias" class="row">
             <div v-for="(media,key) of medias" class="col-12 col-sm-6 col-md-3" :key="key">
-                <file-cover :item="media"></file-cover>
+                <file-cover
+                        :item="media"
+                        v-on:play_click="PlayMusic"
+                ></file-cover>
             </div>
         </div>
+
 
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -39,16 +43,23 @@
             </div>
         </div>
 
+        <audio-component
+                :key="JSON.stringify(music)"
+                :music="music"
+        ></audio-component>
     </div>
 </template>
 
 <script>
     import {ROOT_API} from "~/CONST";
+    import AudioComponent from "../components/AudioComponent";
 
     export default {
         name: "Storages",
+        components: {AudioComponent},
         data: () => ({
             medias: null,
+            music:{},
             selected: {},
             add_rule: {
                 // browse:{
@@ -82,6 +93,10 @@
                 })
         },
         methods: {
+            PlayMusic(item){
+                this.music=item
+                this.$root.$emit('show_music')
+            },
             submit_info(){
               let form=this.$refs.form.$el
                 let data=new FormData(form)
@@ -108,7 +123,6 @@
                             ...this.selected,
                             cover:result
                         }
-                        console.log('new select',this.selected)
                     })
             },
             upload_file_changed(evt) {

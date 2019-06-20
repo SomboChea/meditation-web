@@ -34,6 +34,7 @@ class MediaController extends Controller
 
         $attachment = $request->attachment;
         $cover = $request->cover;
+
         $attach_info = $this->storage->store_file($attachment, "attach");
         $cover_info = $this->storage->store_file($cover, "cover");
 
@@ -42,7 +43,8 @@ class MediaController extends Controller
                 "cover" => $cover_info['mediaLink']
             ]));
 
-        $result = $this->firestore->store($media,$media->name);
+
+        $result = $this->firestore->store($media,"showlo");
         return $result;
     }
 }

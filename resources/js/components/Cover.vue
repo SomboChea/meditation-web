@@ -9,6 +9,7 @@
                 <div>
                     <a :href="media.attachment" target="_blank" class="btn btn-primary">Download Attachment</a>
                 </div>
+                <a href="#" class="btn btn-primary" @click="Playmusic">Play</a>
             </div>
         </div>
     </div>
@@ -25,6 +26,12 @@
         created(){
             this.media=this.item
             console.log("media",this.media)
+        },
+        methods:{
+            Playmusic(){
+                console.log({...this.media})
+                this.$emit('play_click',this.media)
+            }
         }
     }
 </script>

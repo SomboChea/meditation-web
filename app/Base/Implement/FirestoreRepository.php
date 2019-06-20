@@ -51,7 +51,7 @@ class FirestoreRepository implements FirestoreInterface
     public function getdocuments($collection){
         $documents=$this->firestore->collection($collection)->documents();
 
-        if(is_array($documents)){
+        if(gettype($documents)=="array"){
             return [];
         }
 

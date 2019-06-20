@@ -24,7 +24,7 @@ export default [
         path: `${ROOT}/`, component: Dashboard, name: "dashboard"
     },
 
-    {path: `${ROOT}/storage`, component: Storages, name: 'storages'},
+    {path: `${ROOT}/storages`, component: Storages, name: 'storages'},
     {
         path: `${ROOT}/settings`,component:SettingIndex, name:"setting",
         children: [

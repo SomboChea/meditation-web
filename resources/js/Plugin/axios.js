@@ -18,6 +18,8 @@ axios.interceptors.request.use(request=>{
 
 
 axios.interceptors.response.use(res=>res,error=>{
+    store.dispatch(other.close_loading,true)
+
     let response=error.response
     switch (error.response.status) {
         case 400:
