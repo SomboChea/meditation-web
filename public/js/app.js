@@ -4690,7 +4690,7 @@ var render = function() {
                       "div",
                       {
                         key: key,
-                        staticClass: "col-12 col-sm-6 col-md-3 mt-3"
+                        staticClass: "col-12 col-sm-6 col-md-4 col-lg-3 mt-3"
                       },
                       [
                         _c("card-cover", {

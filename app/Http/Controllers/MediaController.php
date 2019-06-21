@@ -34,8 +34,12 @@ class MediaController extends Controller
     private $test;
     public function upload(Request $request)
     {
-        $media = new Media();
+        $request->validate([
+            "attachment"=>"required|file",
+            "name"=>"required",
+        ]);
 
+        $media = new Media();
         // Cover
         $cover = $request->cover ?? env("DEFAULT_COVER_IMAGE","/assets/images/no-image.png");
         if(!is_string($cover)){
@@ -51,7 +55,7 @@ class MediaController extends Controller
                 "cover" => $cover_info['mediaLink'] ?? $cover
             ]));
 
-        $result = $this->firestore->store($media,base64_encode($request->name));
+        $result = $this->firestore->store($media,base64_encode(array_rand($request->name)));
         return $result;
     }
 }

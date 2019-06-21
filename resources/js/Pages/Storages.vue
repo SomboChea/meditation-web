@@ -13,7 +13,7 @@
 
 
             <div v-if="medias" class="row">
-                <div v-for="(media,key) of medias" class="col-12 col-sm-6 col-md-3 mt-3" :key="key">
+                <div v-for="(media,key) of medias" class="col-12 col-sm-6 col-md-4 col-lg-3 mt-3" :key="key">
                     <card-cover
                             :item="media"
                             v-on:play_click="PlayMusic"
