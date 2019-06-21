@@ -49,7 +49,7 @@
             },
             DownloadMusic(){
                 let name=this.media.name
-                let extension=this.media.extension || $_env.DEFAULT_EXTENSION
+                let extension=this.media.extension || this.$_env.DEFAULT_EXTENSION
                 let link=this.attachment
 
                 let element=document.createElement('a')
@@ -67,12 +67,14 @@
 
 <style scoped>
     .card-cover{
+
         padding: 10px;
         box-shadow: 0 0 10px 0px rgba(0,0,0,.15);
         height: 100%;
     }
+
     .card-img-container {
-        height: 80px;
+        height: 150px;
         text-align: center;
         background-repeat: no-repeat;
         background-position: center;

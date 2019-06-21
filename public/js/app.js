@@ -1012,6 +1012,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1022,6 +1026,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       medias: null,
+      loading: false,
       selected: {},
       add_rule: {
         // browse:{
@@ -1053,40 +1058,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     initialize: function initialize() {
-      this.medias = [{
-        "name": "សបថនងអនសនយជមយគ-nam bunnarath new song 2014 non stop collection this month.mp3",
-        "author": "nam",
-        "genre": "roman",
-        "cover": "/assets/images/no-image.png",
-        "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/Cw1zwGXWlcVtA3Y1dZ8hVS5ALI0GaZGvaOvQgc2g.mpga?generation=1561089229726254&alt=media"
-      }, {
-        "name": "not alone",
-        "author": "show lo",
-        "genre": "roman",
-        "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/PXjybszh18NsuBAFApUjcs3uafWLI9LQcSK07yOw.jpeg?generation=1561088459416778&alt=media",
-        "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/SV3HvYbUV4EODUHu4HiDE6f4uUPYOXLncezoDbew.mpga?generation=1561088459000052&alt=media"
-      }, {
-        "author": "Nam bun",
-        "genre": "roman",
-        "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/k3MVjoCNibIG4UXnFvEJjVsmp6h6iBF1EvJwmCGc.jpeg?generation=1561088304478784&alt=media",
-        "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/2QqVn47koWLKTSdiUVVPTvWpObbIQJ4P0l7uuVsi.mpga?generation=1561088303887273&alt=media",
-        "name": "[ Town VCD Vol 22 ] Nam Bunnarath - Nov Kbae Ke Yu Yu Tov Oun Nerng Plich Bong (Khmer MV) 2012.mp3"
-      }]; // this.$axios.get(`${ROOT_API}/medias`)
-      //     .then(res => {
-      //         this.medias = res.data
-      //     })
+      var _this = this;
+
+      // this.medias = [{
+      //     "name": "សបថនងអនសនយជមយគ-nam bunnarath new song 2014 non stop collection this month.mp3",
+      //     "author": "nam",
+      //     "genre": "roman",
+      //     "cover": "/assets/images/no-image.png",
+      //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/Cw1zwGXWlcVtA3Y1dZ8hVS5ALI0GaZGvaOvQgc2g.mpga?generation=1561089229726254&alt=media"
+      // }, {
+      //     "name": "not alone",
+      //     "author": "show lo",
+      //     "genre": "roman",
+      //     "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/PXjybszh18NsuBAFApUjcs3uafWLI9LQcSK07yOw.jpeg?generation=1561088459416778&alt=media",
+      //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/SV3HvYbUV4EODUHu4HiDE6f4uUPYOXLncezoDbew.mpga?generation=1561088459000052&alt=media"
+      // }, {
+      //     "author": "Nam bun",
+      //     "genre": "roman",
+      //     "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/k3MVjoCNibIG4UXnFvEJjVsmp6h6iBF1EvJwmCGc.jpeg?generation=1561088304478784&alt=media",
+      //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/2QqVn47koWLKTSdiUVVPTvWpObbIQJ4P0l7uuVsi.mpga?generation=1561088303887273&alt=media",
+      //     "name": "[ Town VCD Vol 22 ] Nam Bunnarath - Nov Kbae Ke Yu Yu Tov Oun Nerng Plich Bong (Khmer MV) 2012.mp3"
+      // }];
+      this.loading = true;
+      this.$axios.get("".concat(_CONST__WEBPACK_IMPORTED_MODULE_1__["ROOT_API"], "/medias")).then(function (res) {
+        _this.medias = res.data;
+        _this.loading = false;
+      });
     },
     PlayMusic: function PlayMusic(item) {
       this.$root.$emit('SHOW_MUSIC_MODAL', item);
     },
     submit_info: function submit_info() {
-      var _this = this;
+      var _this2 = this;
 
       var form = this.$refs.form.$el;
       var data = new FormData(form);
       data.append('attachment', this.selected.file);
       this.$axios.post("".concat(_CONST__WEBPACK_IMPORTED_MODULE_1__["ROOT_API"], "/media"), data).then(function (res) {
-        _this.initialize();
+        _this2.initialize();
 
         $("#UploadModal").modal('hide');
       });
@@ -1101,7 +1110,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _cover_change = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(evt) {
-        var _this2 = this;
+        var _this3 = this;
 
         var file;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -1111,7 +1120,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 file = evt.path[0].files[0];
                 this.file_to_image(file).then(function (result) {
                   // console.log('image',result)
-                  _this2.selected = _objectSpread({}, _this2.selected, {
+                  _this3.selected = _objectSpread({}, _this3.selected, {
                     cover: result
                   });
                 });
@@ -1163,7 +1172,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var plyr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! plyr */ "./node_modules/plyr/dist/plyr.min.js");
 /* harmony import */ var plyr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(plyr__WEBPACK_IMPORTED_MODULE_0__);
-//
 //
 //
 //
@@ -1334,7 +1342,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     DownloadMusic: function DownloadMusic() {
       var name = this.media.name;
-      var extension = this.media.extension || $_env.DEFAULT_EXTENSION;
+      var extension = this.media.extension || this.$_env.DEFAULT_EXTENSION;
       var link = this.attachment;
       var element = document.createElement('a');
       element.href = link;
@@ -1667,7 +1675,7 @@ exports.push([module.i, "\n.has-val.input100 + .focus-input100[data-v-0004d9e0]:
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "\n.container[data-v-40616801] {\n    margin-left: 0;\n    margin-top: 50px;\n}\n\n", ""]);
+exports.push([module.i, "\n.container[data-v-40616801] {\n    margin-left: 0;\n}\n\n", ""]);
 
 
 
@@ -1682,7 +1690,7 @@ exports.push([module.i, "\n.container[data-v-40616801] {\n    margin-left: 0;\n 
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "\n.card-cover[data-v-66b1a3e8]{\n    padding: 10px;\n    box-shadow: 0 0 10px 0px rgba(0,0,0,.15);\n    height: 100%;\n}\n.card-img-container[data-v-66b1a3e8] {\n    height: 80px;\n    text-align: center;\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n.card-img[data-v-66b1a3e8]{\n    height: 100%;\n    width: auto;\n}\n.button-container[data-v-66b1a3e8]{\n    bottom: 10px;\n    position: absolute;\n    display: flex;\n    justify-content: space-evenly;\n    width: 80%;\n}\n", ""]);
+exports.push([module.i, "\n.card-cover[data-v-66b1a3e8]{\n\n    padding: 10px;\n    box-shadow: 0 0 10px 0px rgba(0,0,0,.15);\n    height: 100%;\n}\n.card-img-container[data-v-66b1a3e8] {\n    height: 150px;\n    text-align: center;\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n.card-img[data-v-66b1a3e8]{\n    height: 100%;\n    width: auto;\n}\n.button-container[data-v-66b1a3e8]{\n    bottom: 10px;\n    position: absolute;\n    display: flex;\n    justify-content: space-evenly;\n    width: 80%;\n}\n", ""]);
 
 
 
@@ -4667,102 +4675,107 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "container" },
-      [
-        _vm.medias
-          ? _c(
-              "div",
-              { staticClass: "row" },
-              _vm._l(_vm.medias, function(media, key) {
-                return _c(
-                  "div",
-                  { key: key, staticClass: "col-12 col-sm-6 col-md-3" },
-                  [
-                    _c("card-cover", {
-                      attrs: { item: media },
-                      on: { play_click: _vm.PlayMusic }
-                    })
-                  ],
-                  1
-                )
-              }),
-              0
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
+    _vm.loading
+      ? _c("div", [_c("h1", [_vm._v("Loading...")])])
+      : _c(
           "div",
-          {
-            staticClass: "modal fade",
-            attrs: {
-              id: "UploadModal",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "exampleModalCenterTitle",
-              "aria-hidden": "true"
-            }
-          },
+          { staticClass: "container" },
           [
+            _vm.medias
+              ? _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(_vm.medias, function(media, key) {
+                    return _c(
+                      "div",
+                      {
+                        key: key,
+                        staticClass: "col-12 col-sm-6 col-md-3 mt-3"
+                      },
+                      [
+                        _c("card-cover", {
+                          attrs: { item: media },
+                          on: { play_click: _vm.PlayMusic }
+                        })
+                      ],
+                      1
+                    )
+                  }),
+                  0
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _c(
               "div",
               {
-                staticClass: "modal-dialog modal-dialog-centered",
-                attrs: { role: "document" }
+                staticClass: "modal fade",
+                attrs: {
+                  id: "UploadModal",
+                  tabindex: "-1",
+                  role: "dialog",
+                  "aria-labelledby": "exampleModalCenterTitle",
+                  "aria-hidden": "true"
+                }
               },
               [
-                _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "modal-body" },
-                    [
-                      _c("form-generate", {
-                        key: JSON.stringify(_vm.selected).length,
-                        ref: "form",
-                        attrs: {
-                          inputs: _vm.add_rule,
-                          data: _vm.selected,
-                          savebtn: false
-                        },
-                        on: { browse_click: _vm.browse_click }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button", "data-dismiss": "modal" }
-                      },
-                      [_vm._v("Close")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.submit_info }
-                      },
-                      [_vm._v("Save changes")]
-                    )
-                  ])
-                ])
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-dialog modal-dialog-centered",
+                    attrs: { role: "document" }
+                  },
+                  [
+                    _c("div", { staticClass: "modal-content" }, [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "modal-body" },
+                        [
+                          _c("form-generate", {
+                            key: JSON.stringify(_vm.selected).length,
+                            ref: "form",
+                            attrs: {
+                              inputs: _vm.add_rule,
+                              data: _vm.selected,
+                              savebtn: false
+                            },
+                            on: { browse_click: _vm.browse_click }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary",
+                            attrs: { type: "button", "data-dismiss": "modal" }
+                          },
+                          [_vm._v("Close")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: { click: _vm.submit_info }
+                          },
+                          [_vm._v("Save changes")]
+                        )
+                      ])
+                    ])
+                  ]
+                )
               ]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("audio-component")
-      ],
-      1
-    )
+            ),
+            _vm._v(" "),
+            _c("audio-component")
+          ],
+          1
+        )
   ])
 }
 var staticRenderFns = [
@@ -4898,12 +4911,6 @@ var staticRenderFns = [
           attrs: { type: "button", "data-dismiss": "modal" }
         },
         [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Save changes")]
       )
     ])
   }

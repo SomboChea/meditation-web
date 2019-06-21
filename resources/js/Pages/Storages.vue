@@ -5,11 +5,15 @@
             <a href="#" class="btn btn-primary right" @click="upload_click">Upload</a>
         </nav>
 
-        <div class="container">
+        <div v-if="loading">
+            <h1>Loading...</h1>
+        </div>
+
+        <div v-else class="container">
 
 
             <div v-if="medias" class="row">
-                <div v-for="(media,key) of medias" class="col-12 col-sm-6 col-md-3" :key="key">
+                <div v-for="(media,key) of medias" class="col-12 col-sm-6 col-md-3 mt-3" :key="key">
                     <card-cover
                             :item="media"
                             v-on:play_click="PlayMusic"
@@ -60,6 +64,7 @@
         components: {AudioComponent},
         data: () => ({
             medias: null,
+            loading:false,
             selected: {},
             add_rule: {
                 // browse:{
@@ -90,29 +95,31 @@
         },
         methods: {
             initialize() {
-                this.medias = [{
-                    "name": "សបថនងអនសនយជមយគ-nam bunnarath new song 2014 non stop collection this month.mp3",
-                    "author": "nam",
-                    "genre": "roman",
-                    "cover": "/assets/images/no-image.png",
-                    "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/Cw1zwGXWlcVtA3Y1dZ8hVS5ALI0GaZGvaOvQgc2g.mpga?generation=1561089229726254&alt=media"
-                }, {
-                    "name": "not alone",
-                    "author": "show lo",
-                    "genre": "roman",
-                    "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/PXjybszh18NsuBAFApUjcs3uafWLI9LQcSK07yOw.jpeg?generation=1561088459416778&alt=media",
-                    "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/SV3HvYbUV4EODUHu4HiDE6f4uUPYOXLncezoDbew.mpga?generation=1561088459000052&alt=media"
-                }, {
-                    "author": "Nam bun",
-                    "genre": "roman",
-                    "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/k3MVjoCNibIG4UXnFvEJjVsmp6h6iBF1EvJwmCGc.jpeg?generation=1561088304478784&alt=media",
-                    "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/2QqVn47koWLKTSdiUVVPTvWpObbIQJ4P0l7uuVsi.mpga?generation=1561088303887273&alt=media",
-                    "name": "[ Town VCD Vol 22 ] Nam Bunnarath - Nov Kbae Ke Yu Yu Tov Oun Nerng Plich Bong (Khmer MV) 2012.mp3"
-                }];
-                // this.$axios.get(`${ROOT_API}/medias`)
-                //     .then(res => {
-                //         this.medias = res.data
-                //     })
+                // this.medias = [{
+                //     "name": "សបថនងអនសនយជមយគ-nam bunnarath new song 2014 non stop collection this month.mp3",
+                //     "author": "nam",
+                //     "genre": "roman",
+                //     "cover": "/assets/images/no-image.png",
+                //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/Cw1zwGXWlcVtA3Y1dZ8hVS5ALI0GaZGvaOvQgc2g.mpga?generation=1561089229726254&alt=media"
+                // }, {
+                //     "name": "not alone",
+                //     "author": "show lo",
+                //     "genre": "roman",
+                //     "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/PXjybszh18NsuBAFApUjcs3uafWLI9LQcSK07yOw.jpeg?generation=1561088459416778&alt=media",
+                //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/SV3HvYbUV4EODUHu4HiDE6f4uUPYOXLncezoDbew.mpga?generation=1561088459000052&alt=media"
+                // }, {
+                //     "author": "Nam bun",
+                //     "genre": "roman",
+                //     "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/k3MVjoCNibIG4UXnFvEJjVsmp6h6iBF1EvJwmCGc.jpeg?generation=1561088304478784&alt=media",
+                //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/2QqVn47koWLKTSdiUVVPTvWpObbIQJ4P0l7uuVsi.mpga?generation=1561088303887273&alt=media",
+                //     "name": "[ Town VCD Vol 22 ] Nam Bunnarath - Nov Kbae Ke Yu Yu Tov Oun Nerng Plich Bong (Khmer MV) 2012.mp3"
+                // }];
+                this.loading=true
+                this.$axios.get(`${ROOT_API}/medias`)
+                    .then(res => {
+                        this.medias = res.data
+                        this.loading=false
+                    })
             },
             PlayMusic(item) {
                 this.$root.$emit('SHOW_MUSIC_MODAL', item)
@@ -174,7 +181,6 @@
 <style scoped>
     .container {
         margin-left: 0;
-        margin-top: 50px;
     }
 
 </style>
