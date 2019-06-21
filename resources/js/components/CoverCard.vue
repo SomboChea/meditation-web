@@ -25,8 +25,8 @@
         </div>
         <div class="button-container">
             <button class="btn btn-circle btn-secondary" @click="DownloadMusic"><i class="mdi mdi-download"></i></button>
-            <button class="btn btn-circle btn-secondary"><i class="mdi mdi-play" @click="PlayMusic"></i></button>
-            <button class="btn btn-circle btn-secondary"><i class="mdi mdi-share" @click="ShareMusic"></i></button>
+            <button class="btn btn-circle btn-secondary" @click="PlayMusic"><i class="mdi mdi-play" ></i></button>
+            <button class="btn btn-circle btn-secondary" @click="ShareMusic"><i class="mdi mdi-share" ></i></button>
         </div>
     </div>
 </template>

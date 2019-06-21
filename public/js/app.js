@@ -5029,13 +5029,23 @@ var render = function() {
         [_c("i", { staticClass: "mdi mdi-download" })]
       ),
       _vm._v(" "),
-      _c("button", { staticClass: "btn btn-circle btn-secondary" }, [
-        _c("i", { staticClass: "mdi mdi-play", on: { click: _vm.PlayMusic } })
-      ]),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-circle btn-secondary",
+          on: { click: _vm.PlayMusic }
+        },
+        [_c("i", { staticClass: "mdi mdi-play" })]
+      ),
       _vm._v(" "),
-      _c("button", { staticClass: "btn btn-circle btn-secondary" }, [
-        _c("i", { staticClass: "mdi mdi-share", on: { click: _vm.ShareMusic } })
-      ])
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-circle btn-secondary",
+          on: { click: _vm.ShareMusic }
+        },
+        [_c("i", { staticClass: "mdi mdi-share" })]
+      )
     ])
   ])
 }
