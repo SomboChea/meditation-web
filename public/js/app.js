@@ -1045,25 +1045,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   created: function created() {
-    var _this = this;
-
-    this.medias = [// {"author":"showlo","genre":"roman","cover":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/q8w4aMPsd2McPlFWQfPe3odiuxZ7ToZFECtx4W7O.jpeg?generation=1561025405392819&alt=media","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/gJCovFdAhUK91VN3paRPhflxPVERZtXTnKfQ4JGR.mpga?generation=1561025404736782&alt=media","name":"showlo1"},
-      // {"author":"showlo","genre":"roman","cover":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/q8w4aMPsd2McPlFWQfPe3odiuxZ7ToZFECtx4W7O.jpeg?generation=1561025405392819&alt=media","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/gJCovFdAhUK91VN3paRPhflxPVERZtXTnKfQ4JGR.mpga?generation=1561025404736782&alt=media","name":"showlo2"}
-    ];
-    this.$axios.get("".concat(_CONST__WEBPACK_IMPORTED_MODULE_1__["ROOT_API"], "/medias")).then(function (res) {
-      _this.medias = res.data;
-    });
+    this.initialize();
   },
   methods: {
+    initialize: function initialize() {
+      this.medias = [{
+        "name": "សបថនងអនសនយជមយគ-nam bunnarath new song 2014 non stop collection this month.mp3",
+        "author": "nam",
+        "genre": "roman",
+        "cover": "/assets/images/no-image.png",
+        "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/Cw1zwGXWlcVtA3Y1dZ8hVS5ALI0GaZGvaOvQgc2g.mpga?generation=1561089229726254&alt=media"
+      }, {
+        "name": "not alone",
+        "author": "show lo",
+        "genre": "roman",
+        "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/PXjybszh18NsuBAFApUjcs3uafWLI9LQcSK07yOw.jpeg?generation=1561088459416778&alt=media",
+        "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/SV3HvYbUV4EODUHu4HiDE6f4uUPYOXLncezoDbew.mpga?generation=1561088459000052&alt=media"
+      }, {
+        "author": "Nam bun",
+        "genre": "roman",
+        "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/k3MVjoCNibIG4UXnFvEJjVsmp6h6iBF1EvJwmCGc.jpeg?generation=1561088304478784&alt=media",
+        "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/2QqVn47koWLKTSdiUVVPTvWpObbIQJ4P0l7uuVsi.mpga?generation=1561088303887273&alt=media",
+        "name": "[ Town VCD Vol 22 ] Nam Bunnarath - Nov Kbae Ke Yu Yu Tov Oun Nerng Plich Bong (Khmer MV) 2012.mp3"
+      }]; // this.$axios.get(`${ROOT_API}/medias`)
+      //     .then(res => {
+      //         this.medias = res.data
+      //     })
+    },
     PlayMusic: function PlayMusic(item) {
       this.$root.$emit('SHOW_MUSIC_MODAL', item);
     },
     submit_info: function submit_info() {
+      var _this = this;
+
       var form = this.$refs.form.$el;
       var data = new FormData(form);
       data.append('attachment', this.selected.file);
       this.$axios.post("".concat(_CONST__WEBPACK_IMPORTED_MODULE_1__["ROOT_API"], "/media"), data).then(function (res) {
-        console.log("response", res);
+        _this.initialize();
+
+        $("#UploadModal").modal('hide');
       });
     },
     browse_click: function browse_click() {
@@ -1113,8 +1134,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         size: file.size,
         cover: "/assets/images/no-image.png"
       };
-      $(".modal").modal('show');
-      console.log('file', this.selected);
+      $("#UploadModal").modal('show');
     },
     upload_click: function upload_click() {
       var input = document.createElement('input');
@@ -1624,7 +1644,7 @@ exports.push([module.i, "\n.has-val.input100 + .focus-input100[data-v-0004d9e0]:
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "\n.card-cover[data-v-66b1a3e8]{\n}\n", ""]);
+exports.push([module.i, "\n.card-img-container[data-v-66b1a3e8] {\n    height: 80px;\n    width: 80px;\n    border-radius: 50%;\n    background-size: cover;\n    background-position: center;\n    background-repeat: no-repeat;\n}\n", ""]);
 
 
 
@@ -4626,7 +4646,7 @@ var render = function() {
         {
           staticClass: "modal fade",
           attrs: {
-            id: "exampleModalCenter",
+            id: "UploadModal",
             tabindex: "-1",
             role: "dialog",
             "aria-labelledby": "exampleModalCenterTitle",
@@ -4921,12 +4941,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card-cover" }, [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-img" }, [
-        _c("img", {
-          staticClass: "card-img-top",
-          attrs: { src: _vm.item.cover, alt: "Card image cap" }
-        })
-      ]),
+      _c("div", {
+        staticClass: "card-img-container trans-hori-center",
+        style: { "background-image": "url(" + _vm.item.cover + ")" }
+      }),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.item.name))])
@@ -4938,7 +4956,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("li", { staticClass: "list-group-item" }, [
-          _vm._v("Genre  : " + _vm._s(_vm.item.genre))
+          _vm._v("Genre : " + _vm._s(_vm.item.genre))
         ])
       ]),
       _vm._v(" "),

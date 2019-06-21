@@ -1,6 +1,23 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
 
+@import "~plyr/src/sass/plyr";
+
 .error{
   color: red;
 }
+
+// Make Center of Width
+.trans-hori-center{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// Make Middle
+.trans-vert-center{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 

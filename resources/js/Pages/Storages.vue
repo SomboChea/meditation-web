@@ -15,7 +15,7 @@
         </div>
 
 
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        <div class="modal fade" id="UploadModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -82,17 +82,16 @@
             }
         }),
         created() {
-            this.medias=[
-                // {"author":"showlo","genre":"roman","cover":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/q8w4aMPsd2McPlFWQfPe3odiuxZ7ToZFECtx4W7O.jpeg?generation=1561025405392819&alt=media","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/gJCovFdAhUK91VN3paRPhflxPVERZtXTnKfQ4JGR.mpga?generation=1561025404736782&alt=media","name":"showlo1"},
-                // {"author":"showlo","genre":"roman","cover":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/q8w4aMPsd2McPlFWQfPe3odiuxZ7ToZFECtx4W7O.jpeg?generation=1561025405392819&alt=media","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/gJCovFdAhUK91VN3paRPhflxPVERZtXTnKfQ4JGR.mpga?generation=1561025404736782&alt=media","name":"showlo2"}
-            ]
-            this.$axios.get(`${ROOT_API}/medias`)
-                .then(res => {
-                    this.medias = res.data
-
-                })
+            this.initialize()
         },
         methods: {
+            initialize(){
+                this.medias=[{"name":"សបថនងអនសនយជមយគ-nam bunnarath new song 2014 non stop collection this month.mp3","author":"nam","genre":"roman","cover":"/assets/images/no-image.png","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/Cw1zwGXWlcVtA3Y1dZ8hVS5ALI0GaZGvaOvQgc2g.mpga?generation=1561089229726254&alt=media"},{"name":"not alone","author":"show lo","genre":"roman","cover":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/PXjybszh18NsuBAFApUjcs3uafWLI9LQcSK07yOw.jpeg?generation=1561088459416778&alt=media","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/SV3HvYbUV4EODUHu4HiDE6f4uUPYOXLncezoDbew.mpga?generation=1561088459000052&alt=media"},{"author":"Nam bun","genre":"roman","cover":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/k3MVjoCNibIG4UXnFvEJjVsmp6h6iBF1EvJwmCGc.jpeg?generation=1561088304478784&alt=media","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/2QqVn47koWLKTSdiUVVPTvWpObbIQJ4P0l7uuVsi.mpga?generation=1561088303887273&alt=media","name":"[ Town VCD Vol 22 ] Nam Bunnarath - Nov Kbae Ke Yu Yu Tov Oun Nerng Plich Bong (Khmer MV) 2012.mp3"}];
+                // this.$axios.get(`${ROOT_API}/medias`)
+                //     .then(res => {
+                //         this.medias = res.data
+                //     })
+            },
             PlayMusic(item){
                 this.$root.$emit('SHOW_MUSIC_MODAL',item)
             },
@@ -102,7 +101,8 @@
                 data.append('attachment',this.selected.file)
                 this.$axios.post(`${ROOT_API}/media`,data)
                     .then(res=>{
-                        console.log("response",res)
+                        this.initialize()
+                        $("#UploadModal").modal('hide')
                     })
             },
             browse_click(){
@@ -133,8 +133,7 @@
                     size:file.size,
                     cover:"/assets/images/no-image.png"
                 }
-                $(".modal").modal('show')
-                console.log('file', this.selected)
+                $("#UploadModal").modal('show')
             },
             upload_click() {
                 let input = document.createElement('input')
