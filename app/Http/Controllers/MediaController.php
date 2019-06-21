@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Base\FirebaseStorageInterface;
 use App\Base\FirestoreInterface;
 use App\Models\Media;
+use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -27,6 +28,10 @@ class MediaController extends Controller
         return $collection;
     }
 
+    /**
+     * @var \Illuminate\Http\UploadedFile
+     */
+    private $test;
     public function upload(Request $request)
     {
         $media = new Media();
@@ -40,8 +45,8 @@ class MediaController extends Controller
         // Attachment Audio
         $attachment = $request->attachment;
         $attach_info = $this->storage->store_file($attachment, "attach");
-
         $media->fill(array_merge(\request()->toArray(),[
+                "extension"=>$request->attachment->clientExtension(),
                 "attachment" => $attach_info['mediaLink'],
                 "cover" => $cover_info['mediaLink'] ?? $cover
             ]));

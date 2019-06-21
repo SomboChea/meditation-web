@@ -1,21 +1,32 @@
 <template>
     <div class="card-cover">
+
         <div class="card">
-            <div class="card-img-container trans-hori-center" v-bind:style="{'background-image':`url(${item.cover})`}">
-                <!--            <img class="card-img-top img-fluid" :src="item.cover" alt="Card image cap">-->
+<!--            <div class="card-img-container trans-hori-center" v-bind:style="{'background-image':`url(${item.cover})`}">-->
+<!--                &lt;!&ndash;            <img class="card-img-top img-fluid" :src="item.cover" alt="Card image cap">&ndash;&gt;-->
+<!--            </div>-->
+            <div class="card-header">
+                <h4>{{item.author}}</h4>
+                <h6>{{item.genre}}</h6>
             </div>
+
+            <div class="card-img-container" :style="{'background-image':`url(${item.cover || $_env.DEFAULT_COVER_IMAGE})`}">
+<!--                <img class="card-img" :src="item.cover" alt="Card image cap">-->
+            </div>
+
+
             <div class="card-body">
                 <h5 class="card-title">{{item.name}}</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Author : {{item.author}}</li>
-                <li class="list-group-item">Genre : {{item.genre}}</li>
-            </ul>
 
-            <div class="card-footer">
-                <a :href="item.attachment" class="btn btn-primary">Download</a>
-                <a href="#" @click="play" class="btn btn-primary">Play</a>
+
             </div>
+
+
+        </div>
+        <div class="button-container">
+            <button class="btn btn-circle btn-secondary" @click="DownloadMusic"><i class="mdi mdi-download"></i></button>
+            <button class="btn btn-circle btn-secondary"><i class="mdi mdi-play" @click="PlayMusic"></i></button>
+            <button class="btn btn-circle btn-secondary"><i class="mdi mdi-share" @click="ShareMusic"></i></button>
         </div>
     </div>
 </template>
@@ -33,21 +44,51 @@
             console.log("media", this.media)
         },
         methods: {
-            play() {
-                console.log({...this.media})
+            PlayMusic() {
                 this.$emit('play_click', this.media)
+            },
+            DownloadMusic(){
+                let name=this.media.name
+                let extension=this.media.extension || $_env.DEFAULT_EXTENSION
+                let link=this.attachment
+
+                let element=document.createElement('a')
+                element.href=link
+                element.target="_blank"
+                element.download=name+"."+extension
+                element.click()
+            },
+            ShareMusic(){
+                alert("no implement")
             }
         }
     }
 </script>
 
 <style scoped>
+    .card-cover{
+        padding: 10px;
+        box-shadow: 0 0 10px 0px rgba(0,0,0,.15);
+        height: 100%;
+    }
     .card-img-container {
         height: 80px;
-        width: 80px;
-        border-radius: 50%;
-        background-size: cover;
-        background-position: center;
+        text-align: center;
         background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .card-img{
+        height: 100%;
+        width: auto;
+    }
+
+    .button-container{
+        bottom: 10px;
+        position: absolute;
+        display: flex;
+        justify-content: space-evenly;
+        width: 80%;
     }
 </style>

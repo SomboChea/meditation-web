@@ -69,13 +69,13 @@ class FirestoreRepository implements FirestoreInterface
     private $test;
     public function store(Model $model,$uid){
         $table_name=$model->getTable();
-        $fillables=$model->getFillable();
-        foreach ($fillables as $fillable){
-            if(!$model->$fillable){
-                throw new \Exception("No set all fillable");
-                break;
-            }
-        }
+//        $fillables=$model->getFillable();
+//        foreach ($fillables as $fillable){
+//            if(!$model->$fillable){
+//                throw new \Exception("No set all fillable");
+//                break;
+//            }
+//        }
 
         $snapshot= $this->firestore->collection($table_name)
             ->document($uid)

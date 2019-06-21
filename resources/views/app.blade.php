@@ -4,8 +4,8 @@
     "APP_LOGO_LIGHT"=>env("APP_LOGO_LIGHT"),
     "APP_LOGO_BLACK"=>env("APP_LOGO_BLACK"),
     "APP_URL"=>env("APP_URL"),
-    "DEFAULT_NOIMAGE"=>env("DEFAULT_NOIMAGE")
-
+    "DEFAULT_COVER_IMAGE"=>env("DEFAULT_COVER_IMAGE",'/assets/images/no-image.png'),
+    "DEFAULT_EXTENSION"=>env('DEFAULT_EXTENSION',"mp3")
     ]
 
 @endphp
@@ -28,8 +28,8 @@
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css">
     <title>{{env("APP_NAME")}}</title>
 
-{{--    Data Table--}}
-{{--    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">--}}
+    {{--    Data Table--}}
+    {{--    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">--}}
 
     @include("components.styles")
 
@@ -37,20 +37,20 @@
 </head>
 
 <body>
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
     </div>
-    <div id="app">
+</div>
+<div id="app">
 
-    </div>
-    <script>
-        window.config={!! json_encode($config) !!}
-    </script>
+</div>
+<script>
+    window.config ={!! json_encode($config) !!}
+</script>
 
-    @include('components.scripts')
+@include('components.scripts')
 </body>
 
 </html>
