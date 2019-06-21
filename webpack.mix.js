@@ -21,7 +21,8 @@ mix.extract([
     "axios",
     "js-cookie",
     'sweetalert2',
-    'vue-avatar'
+    'vue-avatar',
+    "plyr"
 ])
 
 mix.webpackConfig({
