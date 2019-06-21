@@ -31,6 +31,7 @@
             Playmusic(){
                 console.log({...this.media})
                 this.$emit('play_click',this.media)
+
             }
         }
     }

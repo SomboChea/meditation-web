@@ -7,10 +7,10 @@
 
         <div v-if="medias" class="row">
             <div v-for="(media,key) of medias" class="col-12 col-sm-6 col-md-3" :key="key">
-                <file-cover
+                <card-cover
                         :item="media"
                         v-on:play_click="PlayMusic"
-                ></file-cover>
+                ></card-cover>
             </div>
         </div>
 
@@ -43,10 +43,7 @@
             </div>
         </div>
 
-        <audio-component
-                :key="JSON.stringify(music)"
-                :music="music"
-        ></audio-component>
+        <audio-component />
     </div>
 </template>
 
@@ -59,7 +56,6 @@
         components: {AudioComponent},
         data: () => ({
             medias: null,
-            music:{},
             selected: {},
             add_rule: {
                 // browse:{
@@ -86,16 +82,19 @@
             }
         }),
         created() {
+            this.medias=[
+                // {"author":"showlo","genre":"roman","cover":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/q8w4aMPsd2McPlFWQfPe3odiuxZ7ToZFECtx4W7O.jpeg?generation=1561025405392819&alt=media","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/gJCovFdAhUK91VN3paRPhflxPVERZtXTnKfQ4JGR.mpga?generation=1561025404736782&alt=media","name":"showlo1"},
+                // {"author":"showlo","genre":"roman","cover":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/q8w4aMPsd2McPlFWQfPe3odiuxZ7ToZFECtx4W7O.jpeg?generation=1561025405392819&alt=media","attachment":"https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/gJCovFdAhUK91VN3paRPhflxPVERZtXTnKfQ4JGR.mpga?generation=1561025404736782&alt=media","name":"showlo2"}
+            ]
             this.$axios.get(`${ROOT_API}/medias`)
                 .then(res => {
-                    // console.log(res);
                     this.medias = res.data
+
                 })
         },
         methods: {
             PlayMusic(item){
-                this.music=item
-                this.$root.$emit('show_music')
+                this.$root.$emit('SHOW_MUSIC_MODAL',item)
             },
             submit_info(){
               let form=this.$refs.form.$el

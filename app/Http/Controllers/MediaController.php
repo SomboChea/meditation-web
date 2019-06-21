@@ -7,6 +7,7 @@ use App\Base\FirestoreInterface;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 
 class MediaController extends Controller
 {
@@ -44,7 +45,7 @@ class MediaController extends Controller
             ]));
 
 
-        $result = $this->firestore->store($media,"showlo");
+        $result = $this->firestore->store($media,base64_encode($request->name));
         return $result;
     }
 }

@@ -5,18 +5,15 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{dat.name }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div
-                            class="audio-container"
-                            id="audio-container">
+                    <div class="audio-container" id="audio-container">
 
                         <audio id="player">
-                            <source :src="dat.attachment" type="audio/mp3">
                         </audio>
                     </div>
                 </div>
@@ -31,44 +28,41 @@
 </template>
 
 <script>
+    import Plyr from 'plyr'
+
     export default {
         name: "AudioComponent",
         comp_name: "audio-play",
         props: ['music'],
         data: () => ({
-            dat: null,
-
-            player:null,
-            show:false
+            dat: {},
         }),
         created() {
-            this.dat=this.music
         },
         mounted() {
+            let vm=this
 
-            $("#MusicModal").on("hide.bs.modal", function () {
-                // player.stop()
+            let player=new Plyr("#player")
+
+            this.$root.$on("SHOW_MUSIC_MODAL", (music) => {
+                vm.dat = music
+
+                $("#MusicModal").modal('show')
+
+                player.media.src=music.attachment
             })
 
-
-            new Plyr('#player')
-            // $("#MusicModal").modal("show")
-            // $("#MusicModal").modal("hide")
-
-
-            this.$root.$on("show_music", () => {
-                $("#MusicModal").modal("show")
+            $("#MusicModal").on("hide.bs.modal",function () {
+                console.log("hide")
+                player.stop()
             })
-
-
-
-
         }
 
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
     .audio-container {
         position: relative;
         width: 100%;

@@ -14,7 +14,7 @@
 
 
 <!-- Play Audio -->
-<script src="https://cdn.plyr.io/3.5.3/plyr.js"></script>
+{{--<script src="https://cdn.plyr.io/3.5.3/plyr.js"></script>--}}
 <!-- Bootstrap tether Core JavaScript -->
 <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
