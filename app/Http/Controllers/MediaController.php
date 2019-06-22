@@ -52,10 +52,10 @@ class MediaController extends Controller
         $media->fill(array_merge(\request()->toArray(),[
                 "extension"=>$request->attachment->clientExtension(),
                 "attachment" => $attach_info['mediaLink'],
-                "cover" => $cover_info['mediaLink'] ?? $cover
+                "cover" => $cover_info['mediaLink'] ?? $cover,
             ]));
 
-        $result = $this->firestore->store($media,base64_encode(array_rand($request->name)));
+        $result = $this->firestore->store($media,base64_encode($request->name));
         return $result;
     }
 }

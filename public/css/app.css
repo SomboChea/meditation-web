@@ -17699,6 +17699,13 @@ a.plyr__control::before {
   transform: translateY(-50%);
 }
 
+.trans-center-middle {
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+}
+
 @keyframes plyr-progress {
   to {
     background-position: 25px 0;
@@ -19222,5 +19229,12 @@ a.plyr__control::before {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.trans-center-middle {
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
 }
 

@@ -22,7 +22,7 @@
         data:()=>({
             media:null
         }),
-        props: ['item'],
+        props: ['item',"uploading"],
         created(){
             this.media=this.item
             console.log("media",this.media)

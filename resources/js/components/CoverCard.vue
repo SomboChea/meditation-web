@@ -2,23 +2,16 @@
     <div class="card-cover">
 
         <div class="card">
-<!--            <div class="card-img-container trans-hori-center" v-bind:style="{'background-image':`url(${item.cover})`}">-->
-<!--                &lt;!&ndash;            <img class="card-img-top img-fluid" :src="item.cover" alt="Card image cap">&ndash;&gt;-->
-<!--            </div>-->
             <div class="card-header">
-                <h4>{{item.author}}</h4>
-                <h6>{{item.genre}}</h6>
+                <h4>{{item.author || "Unknown"}}</h4>
+                <h6>{{item.genre || "Unknown"}}</h6>
             </div>
 
-            <div class="card-img-container" :style="{'background-image':`url(${item.cover || $_env.DEFAULT_COVER_IMAGE})`}">
-<!--                <img class="card-img" :src="item.cover" alt="Card image cap">-->
-            </div>
-
+            <div class="card-img-container" :style="{'background-image':`url(${item.cover || $_env.DEFAULT_COVER_IMAGE})`}"></div>
 
             <div class="card-body">
-                <h5 class="card-title">{{item.name}}</h5>
-
-
+                <h5 class="card-title">{{item.name }}</h5>
+                <h5 class="card-title text-right " style="color: green">{{item.duration || "0.00"}} s</h5>
             </div>
 
 
@@ -41,7 +34,9 @@
         props: ['item'],
         created() {
             this.media = this.item
-            console.log("media", this.media)
+            this.media.author=this.media.author || "Unknown author"
+            this.media.genre=this.media.genre || "Unknown genre"
+
         },
         methods: {
             PlayMusic() {
@@ -84,6 +79,9 @@
     .card-img{
         height: 100%;
         width: auto;
+    }
+    .card-header{
+        min-height: 10px;
     }
 
     .button-container{

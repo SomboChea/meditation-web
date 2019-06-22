@@ -17,8 +17,8 @@
 
             <div v-else-if="rule.type==='label'">
                    <div class="form-group row">
-                        <label class="col-4">{{rule.label || key}} :</label>
-                        <label class="col-8"> {{temp_data[key]}}</label>
+                        <label class="col-12 col-md-6">{{rule.label || key}} :</label>
+                        <label class="col-12 col-md-6"> {{temp_data[key]}}</label>
                    </div>
             </div>
 

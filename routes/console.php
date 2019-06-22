@@ -25,6 +25,19 @@ Artisan::command('test',function(){
 //    $file=$bucket->object('0K0bsewn3F4frNatACPC9Sjzr8Q0fHcy5z0rdMKk.jpeg');
 //   dd($file->downloadToFile('storage/down.jpg'));
 
+    $s=[
+        "a"=>1,
+        "b"=>null,
+    ];
+    $t=[
+        "a"=>2,
+        "b"=>2,
+        "c"=>3
+    ];
+    var_dump( \Illuminate\Support\Arr::collapse([$s,$t]));
+
+    \Illuminate\Support\Arr::collapse([$s,$t]);
+    return array_fill($s,$t,);
 
 
 });

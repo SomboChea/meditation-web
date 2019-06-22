@@ -959,6 +959,86 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1025,9 +1105,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      medias: null,
+      medias: [],
+      isUploading: false,
       loading: false,
       selected: {},
+      filtered_data: [],
+      // Sorting Area
+      sorting: {
+        type: "asc",
+        column: "name"
+      },
+      // Filtering
+      filter: {
+        column: "",
+        search: ""
+      },
       add_rule: {
         // browse:{
         //     type:"button",
@@ -1037,6 +1129,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         cover: {
           type: "icon",
           column: "cover"
+        },
+        duration: {
+          type: "label",
+          label: "Duration"
         },
         name: {
           type: "text",
@@ -1056,48 +1152,82 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   created: function created() {
     this.initialize();
   },
+  computed: {},
   methods: {
-    initialize: function initialize() {
+    sorted: function sorted(data) {
       var _this = this;
 
-      // this.medias = [{
-      //     "name": "សបថនងអនសនយជមយគ-nam bunnarath new song 2014 non stop collection this month.mp3",
-      //     "author": "nam",
-      //     "genre": "roman",
-      //     "cover": "/assets/images/no-image.png",
-      //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/Cw1zwGXWlcVtA3Y1dZ8hVS5ALI0GaZGvaOvQgc2g.mpga?generation=1561089229726254&alt=media"
-      // }, {
-      //     "name": "not alone",
-      //     "author": "show lo",
-      //     "genre": "roman",
-      //     "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/PXjybszh18NsuBAFApUjcs3uafWLI9LQcSK07yOw.jpeg?generation=1561088459416778&alt=media",
-      //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/SV3HvYbUV4EODUHu4HiDE6f4uUPYOXLncezoDbew.mpga?generation=1561088459000052&alt=media"
-      // }, {
-      //     "author": "Nam bun",
-      //     "genre": "roman",
-      //     "cover": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/k3MVjoCNibIG4UXnFvEJjVsmp6h6iBF1EvJwmCGc.jpeg?generation=1561088304478784&alt=media",
-      //     "attachment": "https://www.googleapis.com/download/storage/v1/b/mediation-edd90.appspot.com/o/2QqVn47koWLKTSdiUVVPTvWpObbIQJ4P0l7uuVsi.mpga?generation=1561088303887273&alt=media",
-      //     "name": "[ Town VCD Vol 22 ] Nam Bunnarath - Nov Kbae Ke Yu Yu Tov Oun Nerng Plich Bong (Khmer MV) 2012.mp3"
-      // }];
+      var temp = _toConsumableArray(data);
+
+      temp.sort(function (a, b) {
+        if (_this.sorting.type === 'asc') return a[_this.sorting.column] > b[_this.sorting.column] ? 1 : -1;else {
+          return a[_this.sorting.column] > b[_this.sorting.column] ? -1 : 1;
+        }
+      });
+      return temp;
+    },
+    filtered: function filtered(data) {
+      var _this2 = this;
+
+      var temp = _toConsumableArray(data);
+
+      var temp_filter = temp.filter(function (value, index, array) {
+        return value[_this2.filter.column].includes(_this2.filter.search);
+      });
+      return temp_filter;
+    },
+    checking: function checking(type) {
+      var link = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      var temp = _toConsumableArray(this.medias);
+
+      var result = [];
+
+      if (link) {
+        var t1 = this.filtered(temp);
+        result = this.sorted(t1);
+      } else {
+        if (type === 'sorting') {
+          result = this.sorted(temp);
+        } else {
+          result = this.filtered(temp);
+        }
+      }
+
+      this.filtered_data = result;
+    },
+    initialize: function initialize() {
+      var _this3 = this;
+
       this.loading = true;
       this.$axios.get("".concat(_CONST__WEBPACK_IMPORTED_MODULE_1__["ROOT_API"], "/medias")).then(function (res) {
-        _this.medias = res.data;
-        _this.loading = false;
+        _this3.medias = res.data;
+        _this3.loading = false;
+        _this3.filtered_data = res.data;
       });
     },
     PlayMusic: function PlayMusic(item) {
       this.$root.$emit('SHOW_MUSIC_MODAL', item);
     },
     submit_info: function submit_info() {
-      var _this2 = this;
+      var _this4 = this;
 
+      this.isUploading = true;
+      $("#UploadModal").modal('hide');
       var form = this.$refs.form.$el;
       var data = new FormData(form);
       data.append('attachment', this.selected.file);
+      data.append('duration', this.selected.duration);
       this.$axios.post("".concat(_CONST__WEBPACK_IMPORTED_MODULE_1__["ROOT_API"], "/media"), data).then(function (res) {
-        _this2.initialize();
+        _this4.isUploading = false;
 
-        $("#UploadModal").modal('hide');
+        _this4.initialize();
+
+        _this4.$swal.fire({
+          type: "success",
+          title: "Success",
+          text: "Upload Success !"
+        });
       });
     },
     browse_click: function browse_click() {
@@ -1110,7 +1240,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _cover_change = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(evt) {
-        var _this3 = this;
+        var _this5 = this;
 
         var file;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -1120,7 +1250,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 file = evt.path[0].files[0];
                 this.file_to_image(file).then(function (result) {
                   // console.log('image',result)
-                  _this3.selected = _objectSpread({}, _this3.selected, {
+                  _this5.selected = _objectSpread({}, _this5.selected, {
                     cover: result
                   });
                 });
@@ -1139,23 +1269,95 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return cover_change;
     }(),
-    upload_file_changed: function upload_file_changed(evt) {
-      var file = evt.path[0].files[0];
-      this.selected = {
-        name: file.name,
-        file: file,
-        size: file.size,
-        cover: "/assets/images/no-image.png"
-      };
-      $("#UploadModal").modal('show');
-    },
+    upload_file_changed: function () {
+      var _upload_file_changed = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(evt) {
+        var file, src, au;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                file = evt.path[0].files[0];
+                _context2.next = 3;
+                return this.file_to_image(file);
+
+              case 3:
+                src = _context2.sent;
+                au = new Audio(src);
+                _context2.next = 7;
+                return new Promise(function (resolve, reject) {
+                  au.onloadeddata = function () {
+                    console.log(au);
+                    resolve(au);
+                  };
+
+                  au.onerror = function () {
+                    console.log("error", au);
+                    resolve(au);
+                  };
+                });
+
+              case 7:
+                console.log(au.duration);
+
+                if (!isNaN(au.duration)) {
+                  _context2.next = 11;
+                  break;
+                }
+
+                this.$swal.fire({
+                  title: "Audio Failed!",
+                  text: "Not Support Type , Please Upload Again",
+                  type: "warning"
+                });
+                return _context2.abrupt("return");
+
+              case 11:
+                // console.log($(au))
+                this.selected = {
+                  duration: au.duration,
+                  name: file.name,
+                  file: file,
+                  size: file.size,
+                  cover: "/assets/images/no-image.png"
+                };
+                $("#UploadModal").modal('show');
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function upload_file_changed(_x2) {
+        return _upload_file_changed.apply(this, arguments);
+      }
+
+      return upload_file_changed;
+    }(),
     upload_click: function upload_click() {
-      var input = document.createElement('input');
+      var input = document.createElement('input'); // input.onchange = this.upload_file_changed
+
+      var vm = this;
       input.type = "file";
       input.accept = "audio/*";
-      input.onchange = this.upload_file_changed;
+
+      input.onchange = function (evt) {
+        vm.upload_file_changed(evt);
+      };
+
       input.click();
     }
+  },
+  mounted: function mounted() {
+    console.log("sorting", this.sorting);
+    $(".collapse").on("show.bs.collapse", function () {
+      console.log("collapse togge");
+      $(".collapse").collapse('hide');
+    });
   }
 });
 
@@ -1266,7 +1468,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       media: null
     };
   },
-  props: ['item'],
+  props: ['item', "uploading"],
   created: function created() {
     this.media = this.item;
     console.log("media", this.media);
@@ -1316,13 +1518,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CoverCard",
   comp_name: "card-cover",
@@ -1334,7 +1529,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ['item'],
   created: function created() {
     this.media = this.item;
-    console.log("media", this.media);
+    this.media.author = this.media.author || "Unknown author";
+    this.media.genre = this.media.genre || "Unknown genre";
   },
   methods: {
     PlayMusic: function PlayMusic() {
@@ -1675,7 +1871,7 @@ exports.push([module.i, "\n.has-val.input100 + .focus-input100[data-v-0004d9e0]:
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "\n.container[data-v-40616801] {\n    margin-left: 0;\n}\n\n", ""]);
+exports.push([module.i, "\n.container[data-v-40616801] {\n    margin-left: 0;\n}\n.uploading-container[data-v-40616801] {\n    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);\n    padding: 10px;\n    height: 100%;\n}\n", ""]);
 
 
 
@@ -1690,7 +1886,7 @@ exports.push([module.i, "\n.container[data-v-40616801] {\n    margin-left: 0;\n}
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "\n.card-cover[data-v-66b1a3e8]{\n\n    padding: 10px;\n    box-shadow: 0 0 10px 0px rgba(0,0,0,.15);\n    height: 100%;\n}\n.card-img-container[data-v-66b1a3e8] {\n    height: 150px;\n    text-align: center;\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n.card-img[data-v-66b1a3e8]{\n    height: 100%;\n    width: auto;\n}\n.button-container[data-v-66b1a3e8]{\n    bottom: 10px;\n    position: absolute;\n    display: flex;\n    justify-content: space-evenly;\n    width: 80%;\n}\n", ""]);
+exports.push([module.i, "\n.card-cover[data-v-66b1a3e8]{\n\n    padding: 10px;\n    box-shadow: 0 0 10px 0px rgba(0,0,0,.15);\n    height: 100%;\n}\n.card-img-container[data-v-66b1a3e8] {\n    height: 150px;\n    text-align: center;\n    background-repeat: no-repeat;\n    background-position: center;\n    background-size: cover;\n}\n.card-img[data-v-66b1a3e8]{\n    height: 100%;\n    width: auto;\n}\n.card-header[data-v-66b1a3e8]{\n    min-height: 10px;\n}\n.button-container[data-v-66b1a3e8]{\n    bottom: 10px;\n    position: absolute;\n    display: flex;\n    justify-content: space-evenly;\n    width: 80%;\n}\n", ""]);
 
 
 
@@ -4675,35 +4871,263 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "collapse", attrs: { id: "sort-area" } }, [
+      _c("div", { staticClass: "card card-body" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "col-sm-12" }, [_vm._v("Sort By")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-12" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sorting.column,
+                    expression: "sorting.column"
+                  }
+                ],
+                staticClass: "form-control form-control-line",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.sorting,
+                      "column",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "name" } }, [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "genre" } }, [_vm._v("Genre")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "author" } }, [_vm._v("Author")])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "col-sm-12" }, [_vm._v("Use")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-12" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sorting.type,
+                    expression: "sorting.type"
+                  }
+                ],
+                staticClass: "form-control form-control-line",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.sorting,
+                      "type",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "asc" } }, [
+                  _vm._v("Ascending")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "desc" } }, [
+                  _vm._v("Descending")
+                ])
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-primary",
+          on: {
+            click: function($event) {
+              return _vm.checking("sorting")
+            }
+          }
+        },
+        [_vm._v("Apply")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-primary",
+          on: {
+            click: function($event) {
+              return _vm.checking("sorting", true)
+            }
+          }
+        },
+        [_vm._v("Apply with Filter")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "collapse", attrs: { id: "filter-area" } }, [
+      _c("div", { staticClass: "card card-body" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "col-sm-12" }, [_vm._v("Search By")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-12" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filter.column,
+                    expression: "filter.column"
+                  }
+                ],
+                staticClass: "form-control form-control-line",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.filter,
+                      "column",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "name" } }, [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "genre" } }, [_vm._v("Genre")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "author" } }, [_vm._v("Author")])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filter.search,
+                  expression: "filter.search"
+                }
+              ],
+              staticClass: "form-control form-control-line",
+              attrs: { type: "text", placeholder: "Search Text" },
+              domProps: { value: _vm.filter.search },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.filter, "search", $event.target.value)
+                }
+              }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-primary",
+          on: {
+            click: function($event) {
+              return _vm.checking("filter")
+            }
+          }
+        },
+        [_vm._v("Apply")]
+      )
+    ]),
+    _vm._v(" "),
     _vm.loading
       ? _c("div", [_c("h1", [_vm._v("Loading...")])])
       : _c(
           "div",
           { staticClass: "container" },
           [
-            _vm.medias
-              ? _c(
-                  "div",
-                  { staticClass: "row" },
-                  _vm._l(_vm.medias, function(media, key) {
-                    return _c(
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _vm.isUploading
+                  ? _c(
                       "div",
-                      {
-                        key: key,
-                        staticClass: "col-12 col-sm-6 col-md-4 col-lg-3 mt-3"
-                      },
+                      { staticClass: "col-12 col-sm-6 col-md-4 col-lg-3 mt-3" },
                       [
-                        _c("card-cover", {
-                          attrs: { item: media },
-                          on: { play_click: _vm.PlayMusic }
-                        })
-                      ],
-                      1
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "h3",
+                          { staticClass: "pos-absolute trans-center-middle" },
+                          [_vm._v("Uploading")]
+                        )
+                      ]
                     )
-                  }),
-                  0
-                )
-              : _vm._e(),
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.filtered_data, function(media, key) {
+                  return _c(
+                    "div",
+                    {
+                      key: key,
+                      staticClass: "col-12 col-sm-6 col-md-4 col-lg-3 mt-3"
+                    },
+                    [
+                      _c("card-cover", {
+                        attrs: { item: media, uploading: false },
+                        on: { play_click: _vm.PlayMusic }
+                      })
+                    ],
+                    1
+                  )
+                })
+              ],
+              2
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -4721,19 +5145,19 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "modal-dialog modal-dialog-centered",
+                    staticClass: "modal-dialog modal-dialog-centered modal-lg",
                     attrs: { role: "document" }
                   },
                   [
                     _c("div", { staticClass: "modal-content" }, [
-                      _vm._m(0),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c(
                         "div",
                         { staticClass: "modal-body" },
                         [
                           _c("form-generate", {
-                            key: JSON.stringify(_vm.selected).length,
+                            key: JSON.stringify(_vm.selected),
                             ref: "form",
                             attrs: {
                               inputs: _vm.add_rule,
@@ -4779,6 +5203,60 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "nav",
+      {
+        staticClass: "navbar navbar-expand-lg navbar-dark bg-light filter-area"
+      },
+      [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-block",
+            attrs: {
+              "data-toggle": "collapse",
+              href: "#filter-area",
+              role: "button",
+              "aria-expanded": "false",
+              "aria-controls": "collapseExample"
+            }
+          },
+          [_vm._v(" Filter ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-block",
+            attrs: {
+              "data-toggle": "collapse",
+              href: "#sort-area",
+              role: "button",
+              "aria-expanded": "false",
+              "aria-controls": "collapseExample"
+            }
+          },
+          [_vm._v(" Sorting ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "uploading-container " }, [
+      _c("div", { staticClass: "lds-ripple trans-center-middle" }, [
+        _c("div", { staticClass: "lds-pos" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "lds-pos" })
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -5001,9 +5479,9 @@ var render = function() {
   return _c("div", { staticClass: "card-cover" }, [
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
-        _c("h4", [_vm._v(_vm._s(_vm.item.author))]),
+        _c("h4", [_vm._v(_vm._s(_vm.item.author || "Unknown"))]),
         _vm._v(" "),
-        _c("h6", [_vm._v(_vm._s(_vm.item.genre))])
+        _c("h6", [_vm._v(_vm._s(_vm.item.genre || "Unknown"))])
       ]),
       _vm._v(" "),
       _c("div", {
@@ -5015,7 +5493,18 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v(_vm._s(_vm.item.name))])
+        _c("h5", { staticClass: "card-title" }, [
+          _vm._v(_vm._s(_vm.item.name))
+        ]),
+        _vm._v(" "),
+        _c(
+          "h5",
+          {
+            staticClass: "card-title text-right ",
+            staticStyle: { color: "green" }
+          },
+          [_vm._v(_vm._s(_vm.item.duration || "0.00") + " s")]
+        )
       ])
     ]),
     _vm._v(" "),
@@ -5121,11 +5610,11 @@ var render = function() {
             : rule.type === "label"
             ? _c("div", [
                 _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-4" }, [
+                  _c("label", { staticClass: "col-12 col-md-6" }, [
                     _vm._v(_vm._s(rule.label || key) + " :")
                   ]),
                   _vm._v(" "),
-                  _c("label", { staticClass: "col-8" }, [
+                  _c("label", { staticClass: "col-12 col-md-6" }, [
                     _vm._v(" " + _vm._s(_vm.temp_data[key]))
                   ])
                 ])
